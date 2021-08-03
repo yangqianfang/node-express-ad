@@ -62,19 +62,37 @@ exports.select = async function (query) {
 }
 /*
  *@functionName: updateById
- *@params1: id
- *@params2: {  is_del }
+ *@params2: {id,name,is_del }
  */
-exports.updateById = async function (id, params) {
-    // let { id, is_del } = query
+exports.updateById = async function (params) {
     // 获取SQL语句
-    const updateSql = sqlText.getUpdateSql(id, params)
+    const updateSql = sqlText.getUpdateSql(params)
     // 查询总条数
     let client = await pool.connect()
     try {
         await client.query(updateSql)
     } catch (error) {
-        // reject(error)
+        throw new Error(error)
+    } finally {
+        client.release()
+    }
+}
+
+/*
+ *@functionName: updateById
+ *@params1: id
+ *@params2: {  is_del }
+ */
+exports.insert = async function (params) {
+    // 获取SQL语句
+    const updateSql = sqlText.getInsertSql(params)
+    // 查询总条数
+    let client = await pool.connect()
+    try {
+        let res = await client.query(updateSql)
+        return res
+    } catch (error) {
+        throw new Error(error)
     } finally {
         client.release()
     }

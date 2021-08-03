@@ -1,8 +1,10 @@
 const { mapData } = require('../../utils/config')
-const { select, updateById } = require('../../model/adclient')
-const { jsonWrite, parseTime } = require('../../utils/index')
+const { select, updateById, insert } = require('../../model/adclient')
+const { response, parseTime } = require('../../utils/index')
+
 const timeRule = '{y}-{m}-{d} {h}:{i}:{s}'
 module.exports = {
+    // 分页列表
     getList: async function (req, res) {
         let { id, city, position, stime, etime, status, page, pageSize } = req.query
         let baseData = { id, city, position, stime, etime, status, page, pageSize }
@@ -17,26 +19,127 @@ module.exports = {
                 item.login_type = mapData.loginType[item.login_type]
             })
 
-            jsonWrite(res, { data })
+            response.json(res, { data })
         } catch (error) {
-            jsonWrite(res)
+            response.error(res, error.message)
         }
     },
 
     getInfoById: async function (req, res) {
-        let { id } = req.query
-        let data = await select({ id })
-        jsonWrite(res, { data: data.list[0] })
+        let { id } = req.body
+        if (!id) {
+            response.error(res, '缺少id参数')
+            return
+        }
+        try {
+            let data = await select({ id })
+            response.json(res, { data: data.list[0] })
+        } catch (error) {
+            response.error(res, error.message)
+        }
     },
 
-    // 缺乏错误处理
+    // 删除
     delete: async function (req, res) {
         const { id, is_del } = req.query
-        await updateById(id, { is_del })
-        jsonWrite(res, { msg: '执行成功！' })
+        try {
+            await updateById(id, { is_del })
+            response.json(res, { msg: '执行成功！' })
+        } catch (error) {
+            response.error(res, error.message)
+        }
     },
 
-    add: async function (req, res, next) {
-        // jsonWrite(res, {aa:222});
+    // 添加
+    add: async function (req, res) {
+        let {
+            id,
+            position,
+            open_app_type,
+            bg_image,
+            font_color,
+            list_img,
+            url,
+            start_time,
+            end_time,
+            city,
+            login_type,
+            login_attribute,
+            content,
+            memo,
+            sort,
+            show_type,
+            channel_type,
+            type,
+            active_info,
+            image,
+            admin_id,
+            is_del,
+            create_time,
+            active_image
+        } = req.body
+
+        let subData = {
+            id,
+            position,
+            open_app_type,
+            bg_image,
+            font_color,
+            list_img,
+            url,
+            start_time,
+            end_time,
+            city,
+            login_type,
+            login_attribute,
+            content,
+            memo,
+            sort,
+            show_type,
+            channel_type,
+            type,
+            active_info,
+            image,
+            admin_id,
+            is_del,
+            create_time,
+            active_image
+        }
+
+        // 必填项验证.....
+
+        if (!sort) {
+            response.error(res, '排序不能为空')
+            return
+        }
+        if (!start_time) {
+            response.error(res, '开始时间不能为空')
+            return
+        }
+        if (!end_time) {
+            response.error(res, '结束时间不能为空')
+            return
+        }
+
+        if (start_time > end_time) {
+            response.error(res, '开始时间不能大于结束时间')
+            return
+        }
+
+        if (!id) {
+            try {
+                await insert(subData)
+                response.json(res, { msg: '执行成功！' })
+            } catch (error) {
+                response.error(res, error.message)
+            }
+        } else {
+            try {
+                await updateById(subData)
+                response.json(res, { msg: '更新成功！' })
+            } catch (error) {
+                response.error(res, error.message)
+            }
+        }
     }
 }

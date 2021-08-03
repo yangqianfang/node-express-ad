@@ -1,13 +1,10 @@
-// conf/db.js
-// MySQL数据库联接配置
-exports.jsonWrite = function (res, ret) {
-    if (typeof ret === 'undefined') {
-        res.json({
-            code: 0,
-            msg: '操作失败'
-        })
-    } else {
-        const result = Object.assign({ code: 200 }, ret)
+exports.response = {
+    json: function (res, data) {
+        let result = Object.assign({ code: 200 }, data)
+        res.json(result)
+    },
+    error: function (res, msg, code) {
+        let result = Object.assign({ code: 0 }, { msg, code: code || 0 })
         res.json(result)
     }
 }
