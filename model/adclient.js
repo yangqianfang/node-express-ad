@@ -47,9 +47,9 @@ exports.select = async function (query) {
         }
         if (page) {
             data.page = {
-                count,
-                page,
-                pageSize: pageSize,
+                count: parseInt(count),
+                page: parseInt(page),
+                pageSize: parseInt(pageSize),
                 totalPage: Math.ceil(count / params.page.pageSize)
             }
         }

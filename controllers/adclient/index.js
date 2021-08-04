@@ -12,6 +12,17 @@ module.exports = {
             let data = await select(baseData)
             // 格式化返回数据
             data.list.map((item) => {
+                if (item.is_del === 2) {
+                    item.status = '已关闭'
+                }
+
+                if (item.is_del === 1) {
+                    item.status = '进行中'
+                }
+
+                if (item.end_time < parseInt(new Date().getTime() / 1000)) {
+                    item.status = '已结束'
+                }
                 item.create_time = parseTime(item.create_time, timeRule)
                 item.end_time = parseTime(item.end_time, timeRule)
                 item.start_time = parseTime(item.start_time, timeRule)
