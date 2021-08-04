@@ -33,7 +33,7 @@ module.exports = {
         }
         try {
             let data = await select({ id })
-            response.json(res, { data: data.list[0] })
+            response.json(res, { data: data.list[0] || {} })
         } catch (error) {
             response.error(res, error.message)
         }
