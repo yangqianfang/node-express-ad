@@ -1,8 +1,8 @@
 const { mapData } = require('../../utils/config')
 const { select, updateById, insert } = require('../../model/adclient')
 const { response, parseTime } = require('../../utils/index')
-
 const timeRule = '{y}-{m}-{d} {h}:{i}:{s}'
+
 module.exports = {
     // 分页列表
     getList: async function (req, res) {
@@ -25,6 +25,7 @@ module.exports = {
         }
     },
 
+    //查询一条
     getInfoById: async function (req, res) {
         let { id } = req.body
         if (!id) {
