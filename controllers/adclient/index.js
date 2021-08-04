@@ -23,6 +23,9 @@ module.exports = {
                 if (item.end_time < parseInt(new Date().getTime() / 1000)) {
                     item.status = '已结束'
                 }
+                item.content = item.active_info
+                item.show_order = item.sort
+                item.login_attribute = mapData.loginAttribute[item.login_type][item.login_attribute]
                 item.create_time = parseTime(item.create_time, timeRule)
                 item.end_time = parseTime(item.end_time, timeRule)
                 item.start_time = parseTime(item.start_time, timeRule)
