@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
 let adClient = require('../controllers/adclient/index')
-console.log(adClient)
 /*  get list */
 router.get('/list', function (req, res, next) {
     adClient.getList(req, res, next)
