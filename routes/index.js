@@ -3,7 +3,8 @@ var router = express.Router()
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.send('hellow--test--test2-66')
+    res.setHeader("Content-Type", "application/json;charset=utf-8")
+    res.send('{"code":0,"message":"permission denied","data":null}')
 })
 
 module.exports = router
