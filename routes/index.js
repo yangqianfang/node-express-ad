@@ -3,7 +3,7 @@ var router = express.Router()
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.send('hellow')
+    res.send('hellow--test')
 })
 
 module.exports = router
