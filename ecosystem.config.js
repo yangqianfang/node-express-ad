@@ -9,16 +9,16 @@ module.exports = {
             },
             env_dev: {
                 NODE_ENV: 'development', // 环境参数，当前指定为生产环境 process.env.NODE_ENV
-                PORT: '8081' // process.env.PORT
+                PORT: '80' // process.env.PORT
             },
             env_test: {
                 NODE_ENV: 'development', // 环境参数，当前指定为开发环境 pm2 start app.js --env test
-                PORT: '8081'
+                PORT: '80'
             },
-            env_production: {
+            env_prod: {
                 // 环境参数，当前指定为测试环境 pm2 start app.js --env production
-                NODE_ENV: 'production',
-                PORT: '8080'
+                NODE_ENV: 'prod',
+                PORT: '80'
             }
         }
     ]

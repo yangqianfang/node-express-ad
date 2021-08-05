@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "pm2 start ecosystem.config.js --watch --env dev ",
     "test": "pm2 start ecosystem.config.js --env test",
-    "start": "pm2 start ecosystem.config.js --env production",
-    "restart": "npm install && pm2 reload ecosystem.config.js --env production",
+    "start": "pm2 start ecosystem.config.js --env prod",
+    "restart": "npm install && pm2 reload ecosystem.config.js --env prod",
     "stop": "pm2 stop node-server"
   },
   "dependencies": {
