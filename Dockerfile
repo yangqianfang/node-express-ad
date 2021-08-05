@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/ifengniao/node:16-alpine3.11
+FROM registry-vpc.cn-hangzhou.aliyuncs.com/ifengniao/node:16-alpine3.11
 
 LABEL maintainer "ifengniao.net"
 
