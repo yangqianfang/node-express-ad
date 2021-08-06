@@ -4,6 +4,7 @@ module.exports = {
             name: 'node-server',
             script: './bin/www',
             exec_mode: 'cluster',
+            watch: true,
             watch_options: {
                 usePolling: true
             },

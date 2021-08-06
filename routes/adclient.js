@@ -13,8 +13,13 @@ router.get('/delete', function (req, res, next) {
 router.post('/info', function (req, res, next) {
     adClient.getInfoById(req, res, next)
 })
-router.post('/add', function (req, res, next) {
-    adClient.add(req, res, next)
+
+router.post('/insert', function (req, res, next) {
+    adClient.insert(req, res, next)
+})
+
+router.post('/update', function (req, res, next) {
+    adClient.update(req, res, next)
 })
 
 module.exports = router

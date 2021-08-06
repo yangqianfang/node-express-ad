@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "pm2 start ecosystem.config.js --watch --env dev ",
+    "dev": "pm2 start ecosystem.config.js --env dev ",
     "test": "pm2 start ecosystem.config.js --env test",
     "start": "pm2 start ecosystem.config.js --env prod",
     "restart": "npm install && pm2 reload ecosystem.config.js --env prod",

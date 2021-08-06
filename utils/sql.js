@@ -141,6 +141,7 @@ class SQL {
         })
 
         let sql = `INSERT INTO ${this.table} (${formatKeys.keys.toString()}) VALUES (${str})`
+        console.log(sql)
         return sql
     }
 }
