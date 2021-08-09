@@ -22,4 +22,8 @@ router.post('/update', function (req, res, next) {
     adClient.update(req, res, next)
 })
 
+router.post('/getActiveList', function (req, res, next) {
+    adClient.getActiveList(req, res, next)
+})
+
 module.exports = router

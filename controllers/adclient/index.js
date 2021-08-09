@@ -1,5 +1,5 @@
 const { mapData } = require('../../utils/config')
-const { select, updateById, insert } = require('../../model/adclient')
+const { select, updateById, insert, getActiveList } = require('../../model/adclient')
 const { response, parseTime } = require('../../utils/index')
 const timeRule = '{y}-{m}-{d} {h}:{i}:{s}'
 
@@ -33,6 +33,37 @@ module.exports = {
                 item.login_type = mapData.loginType[item.login_type]
             })
 
+            response.json(res, { data })
+        } catch (error) {
+            response.error(res, error.message)
+        }
+    },
+
+    /*
+     *@description:查询返回符合条件进行中的广告
+     *@params1: city 城市 ,position 广告位置,login_type 登陆状态,login_attribute 用户属性
+     *@return:list
+     */
+    getActiveList: async function (req, res) {
+        let { city, position, login_type, login_attribute } = req.body,
+            nowTime = parseInt(new Date().getTime() / 1000)
+
+        if (city) {
+            city = ['全国', city]
+        }
+
+        let baseData = {
+            city: city,
+            position,
+            login_type,
+            login_attribute,
+            start_time: nowTime,
+            end_time: nowTime,
+            is_del: 1
+        }
+
+        try {
+            let data = await getActiveList(baseData)
             response.json(res, { data })
         } catch (error) {
             response.error(res, error.message)

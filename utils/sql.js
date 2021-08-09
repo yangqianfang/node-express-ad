@@ -27,7 +27,19 @@ class SQL {
             sql = ''
         data.forEach((item) => {
             if (item.value) {
-                arr.push(`${item.key}${item.rule}'${item.value}'`)
+                if (Array.isArray(item.value)) {
+                    let str = '',
+                        values = item.value
+                    values.forEach((item, i) => {
+                        str += `'${item}'`
+                        if (i != values.length - 1) {
+                            str += ','
+                        }
+                    })
+                    arr.push(`${item.key} ${item.rule} (${str})`)
+                } else {
+                    arr.push(`${item.key}${item.rule}'${item.value}'`)
+                }
             }
         })
         if (arr.length > 0) {
@@ -133,6 +145,7 @@ class SQL {
         let formatKeys = this.formatInsertKeys(params)
         let values = formatKeys.values,
             str = ''
+
         values.forEach((item, i) => {
             str += `'${item}'`
             if (i != values.length - 1) {
@@ -141,7 +154,6 @@ class SQL {
         })
 
         let sql = `INSERT INTO ${this.table} (${formatKeys.keys.toString()}) VALUES (${str})`
-        console.log(sql)
         return sql
     }
 }
