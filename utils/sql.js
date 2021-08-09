@@ -1,5 +1,5 @@
 /*
- *@description: 生成slq语句 postgresql数据库
+ *@description: 生成postgresql数据库slq语句
  *@author: yangqianfang
  *@date: 2021-07-29 18:40:05
  *@version: V1.0.0
@@ -139,7 +139,7 @@ class SQL {
     /*
      *@description:拼接插入数据库sql
      *@params1: 数据对象 {city:'北京市',position:2}
-     *@return:INSERT INTO advert (city,"position") VALUES ('北京市','2');
+     *@return:INSERT INTO advert (city,position) VALUES ('北京市','2');
      */
     getInsertSql(params) {
         let formatKeys = this.formatInsertKeys(params)

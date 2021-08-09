@@ -1,3 +1,5 @@
+const { isNull } = require('lodash')
+
 exports.response = {
     json: function (res, data) {
         let result = Object.assign({ code: 200 }, data)
@@ -50,4 +52,16 @@ exports.parseTime = function (time, cFormat = '') {
         return value || 0
     })
     return timeStr
+}
+
+//判断参数全部为空
+exports.paramsIsNull = function (data) {
+    let isNull = true
+    for (let s in data) {
+        if (data[s]) {
+            isNull = false
+        }
+    }
+
+    return isNull
 }
