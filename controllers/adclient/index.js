@@ -1,5 +1,5 @@
 const { mapData } = require('../../utils/config')
-const { select, updateById, insert } = require('../../model/adclient')
+const { select, updateById, insert, getActiveList } = require('../../model/adclient')
 const { response, parseTime } = require('../../utils/index')
 const timeRule = '{y}-{m}-{d} {h}:{i}:{s}'
 
@@ -39,6 +39,37 @@ module.exports = {
         }
     },
 
+    /*
+     *@description:查询返回符合条件进行中的广告
+     *@params1: city 城市 ,position 广告位置,login_type 登陆状态,login_attribute 用户属性
+     *@return:list
+     */
+    getActiveList: async function (req, res) {
+        let { city, position, login_type, login_attribute } = req.body,
+            nowTime = parseInt(new Date().getTime() / 1000)
+
+        if (city) {
+            city = ['全国', city]
+        }
+
+        let baseData = {
+            city: city,
+            position,
+            login_type,
+            login_attribute,
+            start_time: nowTime,
+            end_time: nowTime,
+            is_del: 1
+        }
+
+        try {
+            let data = await getActiveList(baseData)
+            response.json(res, { data })
+        } catch (error) {
+            response.error(res, error.message)
+        }
+    },
+
     //查询一条
     getInfoById: async function (req, res) {
         let { id } = req.body
@@ -65,65 +96,61 @@ module.exports = {
         }
     },
 
-    // 添加
-    add: async function (req, res) {
+    // 插入数据库
+    insert: async function (req, res) {
+        // let json = eval('(' + req.body.data + ')')
+
         let {
             id,
-            position,
-            open_app_type,
-            bg_image,
-            font_color,
-            list_img,
-            url,
-            start_time,
-            end_time,
             city,
+            position,
             login_type,
             login_attribute,
-            content,
-            memo,
             sort,
             show_type,
             channel_type,
             type,
+            url,
+            start_time,
+            end_time,
             active_info,
             image,
+            memo,
             admin_id,
             is_del,
             create_time,
-            active_image
+            active_image,
+            open_app_type,
+            bg_image,
+            font_color
         } = req.body
 
         let subData = {
             id,
-            position,
-            open_app_type,
-            bg_image,
-            font_color,
-            list_img,
-            url,
-            start_time,
-            end_time,
             city,
+            position,
             login_type,
             login_attribute,
-            content,
-            memo,
             sort,
             show_type,
             channel_type,
             type,
+            url,
+            start_time,
+            end_time,
             active_info,
             image,
+            memo,
             admin_id,
             is_del,
             create_time,
-            active_image
+            active_image,
+            open_app_type,
+            bg_image,
+            font_color
         }
 
-        // 必填项验证.....
-
-        if (!sort) {
+        /* if (!sort) {
             response.error(res, '排序不能为空')
             return
         }
@@ -139,6 +166,19 @@ module.exports = {
         if (start_time > end_time) {
             response.error(res, '开始时间不能大于结束时间')
             return
+        } */
+
+        // 判断所有字段为空
+        let isNull = true
+        for (let s in subData) {
+            if (subData[s]) {
+                isNull = false
+            }
+        }
+
+        if (isNull) {
+            response.error(res, '字段不正确')
+            return
         }
 
         if (!id) {
@@ -146,6 +186,7 @@ module.exports = {
                 await insert(subData)
                 response.json(res, { msg: '执行成功！' })
             } catch (error) {
+                console.log(error)
                 response.error(res, error.message)
             }
         } else {
@@ -155,6 +196,71 @@ module.exports = {
             } catch (error) {
                 response.error(res, error.message)
             }
+        }
+    },
+
+    // 插入数据库
+    update: async function (req, res) {
+        let {
+            id,
+            city,
+            position,
+            login_type,
+            login_attribute,
+            sort,
+            show_type,
+            channel_type,
+            type,
+            url,
+            start_time,
+            end_time,
+            active_info,
+            image,
+            memo,
+            admin_id,
+            is_del,
+            create_time,
+            active_image,
+            open_app_type,
+            bg_image,
+            font_color
+        } = req.body
+
+        let subData = {
+            id,
+            city,
+            position,
+            login_type,
+            login_attribute,
+            sort,
+            show_type,
+            channel_type,
+            type,
+            url,
+            start_time,
+            end_time,
+            active_info,
+            image,
+            memo,
+            admin_id,
+            is_del,
+            create_time,
+            active_image,
+            open_app_type,
+            bg_image,
+            font_color
+        }
+
+        if (!id) {
+            response.error(res, '字段id不能为空')
+            return
+        }
+
+        try {
+            await updateById(subData)
+            response.json(res, { msg: '更新成功！' })
+        } catch (error) {
+            response.error(res, error.message)
         }
     }
 }
