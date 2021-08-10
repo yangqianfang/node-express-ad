@@ -1,5 +1,3 @@
-const { isNull } = require('lodash')
-
 exports.response = {
     json: function (res, data) {
         let result = Object.assign({ code: 200 }, data)
