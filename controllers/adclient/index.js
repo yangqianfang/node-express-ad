@@ -177,7 +177,7 @@ module.exports = {
         }
 
         if (isNull) {
-            response.error(res, '字段不正确')
+            response.error(res, '缺少字段')
             return
         }
 

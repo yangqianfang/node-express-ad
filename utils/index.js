@@ -51,3 +51,15 @@ exports.parseTime = function (time, cFormat = '') {
     })
     return timeStr
 }
+
+//判断参数全部为空
+exports.paramsIsNull = function (data) {
+    let isNull = true
+    for (let s in data) {
+        if (data[s]) {
+            isNull = false
+        }
+    }
+
+    return isNull
+}
