@@ -3,12 +3,12 @@ var express = require('express')
 var favicon = require('serve-favicon')
 var path = require('path')
 var logger = require('morgan')
-
+var responseTime = require('response-time')
 var app = express()
 app.use(logger('dev'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-
+app.use(responseTime())
 const basePath = '/api'
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
