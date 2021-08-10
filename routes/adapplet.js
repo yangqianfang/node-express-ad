@@ -11,7 +11,7 @@ router.post('/update', function (req, res, next) {
 })
 
 router.post('/getActiveList', function (req, res, next) {
-    adApplet.update(req, res, next)
+    adApplet.getActiveList(req, res, next)
 })
 router.post('/info', function (req, res, next) {
     adApplet.getInfoById(req, res, next)

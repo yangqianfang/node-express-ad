@@ -8,7 +8,7 @@ module.exports = {
      *@return:list
      */
     getActiveList: async function (req, res) {
-        let { city, position, login_type, login_attribute } = req.body,
+        let { city, show_source } = req.body,
             nowTime = parseInt(new Date().getTime() / 1000)
 
         if (city) {
@@ -17,9 +17,7 @@ module.exports = {
 
         let baseData = {
             city: city,
-            position,
-            login_type,
-            login_attribute,
+            show_source,
             start_time: nowTime,
             end_time: nowTime,
             is_del: 1
