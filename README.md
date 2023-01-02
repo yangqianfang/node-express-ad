@@ -2,11 +2,11 @@
 
 npm install 
 
-dev
+## dev:
 
 npm start dev 
 
-pro:
+## pro:
 
 npm start
 
