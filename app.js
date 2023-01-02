@@ -6,8 +6,8 @@ var logger = require('morgan')
 var responseTime = require('response-time')
 var app = express()
 app.use(logger('dev'))
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
+app.use(express.urlencoded({ extended: false })) // 接收post参数 username=aaa&passworld=bbb
+app.use(express.json()) // 接收post 对象{password:'aaa',passworld:'bbbb'}
 app.use(responseTime())
 const basePath = '/api'
 // view engine setup
